@@ -1,5 +1,5 @@
 function [emergence, selfOrganization, complexity, varargout ] = ...
-ContinuousComplexityMeasures(pdfMatrix, varargin )
+ContinuousComplexityMeasures(pdfSample, varargin )
     minVal  = varargin{1};
     maxVal  = varargin{2};
     distSampleSize = varargin{3};
@@ -10,7 +10,7 @@ ContinuousComplexityMeasures(pdfMatrix, varargin )
     Delta = (maxVal-minVal)/(distSampleSize);
     %Use the provided Probability Distribution Function     
     %to determine the non-zero elements of the PDF
-    tempPdf = pdfMatrix;
+    tempPdf = pdfSample;
     ind = tempPdf>0;
     pdfNoZeros = sum(ind);
     %Calculate Differential Entropy 
@@ -40,5 +40,6 @@ ContinuousComplexityMeasures(pdfMatrix, varargin )
         selfOrganization = 1 - emergence;
         complexity = 4 * (emergence * selfOrganization);
     end
+    varargout{1} = diffEntrop;
 end
 

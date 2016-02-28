@@ -1,20 +1,23 @@
 clear;clc
 format long;
-path = 'C:\Users\Alveuz\Google Drive\Research And Development\UNAM PostDoc\Working Papers\ESC Matlab Functions for Frontiers\Data\Test RealWorld\';
-SolarFlaresData         = 'Flares\SolarFlaresData.mat';
-BikeSharingData         = 'Bike Sharing\BikeSharingData.mat';
-HouseElecCnsmptData     = 'Household Electric Consumption\HouseHoldElectricConsumption.mat';
+path = 'C:\Users\Alveuz\Documents\GitHub\EntropyB_Complexity\';
+
+SolarFlaresData         = 'SolarFlaresData.mat';
+BikeSharingData         = 'BikeSharingData.mat';
+HouseElecCnsmptData     = 'HouseHoldElectricConsumption.mat';
 % Load datasets containing UCI's data sets
 % In this example SolarFlares and Household electric consumption are
 % matrix while Bike sharing data for hour and day are two separated vectors
 % for convinience.
-% dataSet = 1; load([path SolarFlaresData]);%Flares, contains 
-% dataSet = 2; load([path BikeSharingData]);%Bike Sharing
-% dataSet = 3; load([path HouseElecCnsmptData]);%Household electric consumption
-% complexityType = 1; %Discrete complexity measures
-complexityType = 2; %Continuous complexity measures
+
+complexityType = 1; %Discrete complexity measures
+% complexityType = 2; %Continuous complexity measures
+
 switch complexityType
     case 1
+        % dataSet = 1; load([path SolarFlaresData]);%Flares, contains 
+        % dataSet = 2; load([path BikeSharingData]);%Bike Sharing
+        dataSet = 3; load([path HouseElecCnsmptData]);%Household electric consumption
         switch dataSet
             case 1
                 noOfStates  = 30;%Number of states of the system
@@ -86,7 +89,8 @@ switch complexityType
                 % Define Mean of the Normal Distribution(i.e. Mu=0)
                 mu      = (maxVal - minVal)/2;
                 %Delta increment for discrete Integration
-                Delta   = (maxVal-minVal)/(distSampleSize);
+                Delta       = (maxVal-minVal)/(distSampleSize);
+                noOfStates  = 50;
                 for i=1:distParamNum
                     % Define Sigma of the Normal Distribution
                     sigma   = paramSeq(1,i);
@@ -104,20 +108,17 @@ switch complexityType
                     % Calculate Differential Complexity Measures
                     [Emrgnc(i,1), SlfRgnztn(i,1), Cmplxty(i,1)] = ...
                         ContinuousComplexityMeasures(pdfMatrix(:, i),...
-                        minVal, maxVal, distSampleSize,50);
+                        minVal, maxVal, distSampleSize,noOfStates);
                 end
             case 2
-                %//////////////////////////////////////
                 % Power-Law Distribution
                 % Two Parameters, xmin and power exponent (alpha)
-                %//////////////////////////////////////
-                % Initialize sigma parameter sequence
-                % Mean parameter is constant, mu = 0
                 paramSeqXmin    = 1:distParamNum;
                 % paramSeqScale   = 1:distParamNum;
                 % Create discrete integration sequence
-                maxVal  = 100;
-                minVal  = 10; 
+                maxVal      = 100;
+                minVal      = 10;
+                noOfStates  = 50;
                 for i=1:distParamNum
                     % Define the Power-Law Density Distribution Function
                     xmin        = paramSeqXmin(i);
@@ -135,12 +136,13 @@ switch complexityType
                     end
                     [Emrgnc(i,1), SlfRgnztn(i,1), Cmplxty(i,1)] = ...
                         ContinuousComplexityMeasures(pLawDist(:, i),...
-                        minVal, maxVal, distSampleSize,100);
+                        minVal, maxVal, distSampleSize,noOfStates);
                 end
         end
 end
 ESC = [Emrgnc, SlfRgnztn, Cmplxty];
 figure(8);
-my_bar3(ESC,1)
+bar3(ESC)
+% my_bar3(ESC,1)
 disp('Bye Cruel World!!!')
 
