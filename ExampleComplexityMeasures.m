@@ -10,17 +10,17 @@ HouseElecCnsmptData     = 'HouseHoldElectricConsumption.mat';
 % matrix while Bike sharing data for hour and day are two separated vectors
 % for convinience.
 
-complexityType = 1; %Discrete complexity measures
-% complexityType = 2; %Continuous complexity measures
+% complexityType = 1; %Discrete complexity measures
+complexityType = 2; %Continuous complexity measures
 
 switch complexityType
     case 1
-        % dataSet = 1; load([path SolarFlaresData]);%Flares, contains 
+        dataSet = 1; load([path SolarFlaresData]);%Flares, contains 
         % dataSet = 2; load([path BikeSharingData]);%Bike Sharing
-        dataSet = 3; load([path HouseElecCnsmptData]);%Household electric consumption
+        % dataSet = 3; load([path HouseElecCnsmptData]);%Household electric consumption
+        noOfStates  = 10;%Number of states of the system
         switch dataSet
             case 1
-                noOfStates  = 30;%Number of states of the system
                 Emrgnc      = zeros(3,1);
                 SlfRgnztn   = zeros(3,1);
                 Cmplxty     = zeros(3,1);
@@ -32,24 +32,22 @@ switch complexityType
                         DiscreteComplexityMeasures(pmfSample, noOfStates);
                 end
             case 2
-                noOfStates  = 30;%Number of states of the system
                 Emrgnc      = zeros(2,1);
                 SlfRgnztn   = zeros(2,1);
                 Cmplxty     = zeros(2,1);
                 %BikeSDDay(:,1) contains a counter of Bikes used per Day, 
-                %BikeSDHour(:,2) contains a counter of Bikes used per Hour
+                %BikeSDHour(:,1) contains a counter of Bikes used per Hour
                 for i=1:2
                     switch i
                         case 1
                             pmfSample   = BikeSDDay(:,1);
                         case 2
-                            pmfSample   = BikeSDHour(:,2);
+                            pmfSample   = BikeSDHour(:,1);
                     end
                     [Emrgnc(i,1), SlfRgnztn(i,1), Cmplxty(i,1)] = ...
                         DiscreteComplexityMeasures(pmfSample, noOfStates);
                 end
             case 3
-                noOfStates  = 30;%Number of states of the system
                 Emrgnc      = zeros(2,1);
                 SlfRgnztn   = zeros(2,1);
                 Cmplxty     = zeros(2,1);
@@ -74,13 +72,16 @@ switch complexityType
         % 2 = Power Law Distribution
         pdfType = 2;
         %Want to produce plots for distributions?
-         plotPDFOn = 0;%Definetively NO
-%        plotPDFOn = 1; %Yes, it would be amazing
+%          plotPDFOn = 0;%Definetively NO
+       plotPDFOn = 1; %Yes, it would be amazing
+        noOfStates  = 50;
         %% Create Probability Distribution Parameter Sequence
         switch pdfType
             case 1
                 % Normal Distribution
                 % Two Parameters, Mean (mu) and Standard Deviation (sigma)
+                % Since differential entropy is translate invariant, the
+                % mu parameter is dropped out of the calculations.
                 paramSeq        = 1:distParamNum; 
                 % Create discrete integration sequence
                 maxVal  = 100;
@@ -90,7 +91,6 @@ switch complexityType
                 mu      = (maxVal - minVal)/2;
                 %Delta increment for discrete Integration
                 Delta       = (maxVal-minVal)/(distSampleSize);
-                noOfStates  = 50;
                 for i=1:distParamNum
                     % Define Sigma of the Normal Distribution
                     sigma   = paramSeq(1,i);
@@ -107,27 +107,27 @@ switch complexityType
                     pdfMatrix(:, i) = gaussDist(1,:);
                     % Calculate Differential Complexity Measures
                     [Emrgnc(i,1), SlfRgnztn(i,1), Cmplxty(i,1)] = ...
-                        ContinuousComplexityMeasures(pdfMatrix(:, i),...
+                        ContinuousComplexityMeasures(gaussDist,...
                         minVal, maxVal, distSampleSize,noOfStates);
                 end
             case 2
                 % Power-Law Distribution
-                % Two Parameters, xmin and power exponent (alpha)
+                % Two Parameters, xmin and scale exponent (alpha)
+                % In this example, alpha is fixed, while x_min is tested.
+                alpha           = 5;
                 paramSeqXmin    = 1:distParamNum;
                 % paramSeqScale   = 1:distParamNum;
                 % Create discrete integration sequence
                 maxVal      = 100;
                 minVal      = 10;
-                noOfStates  = 50;
                 for i=1:distParamNum
                     % Define the Power-Law Density Distribution Function
                     xmin        = paramSeqXmin(i);
                     dtSeq       = linspace (xmin, maxVal, distSampleSize);
-                    alpha       = 5;
                     % Create the Power-Law PDF
                     rightHand   = ((alpha-1)/xmin);
                     leftHand    = (dtSeq(:)./xmin).^(-1*alpha);
-                    pLawDist(:,i)   = rightHand*leftHand;
+                    pLawDist   = rightHand*leftHand;
                     switch plotPDFOn
                         case 1
                             figure(2);
@@ -135,14 +135,14 @@ switch complexityType
                             hold on;
                     end
                     [Emrgnc(i,1), SlfRgnztn(i,1), Cmplxty(i,1)] = ...
-                        ContinuousComplexityMeasures(pLawDist(:, i),...
+                        ContinuousComplexityMeasures(pLawDist,...
                         minVal, maxVal, distSampleSize,noOfStates);
                 end
         end
 end
 ESC = [Emrgnc, SlfRgnztn, Cmplxty];
-figure(8);
-bar3(ESC)
-% my_bar3(ESC,1)
+figure(3);
+%bar3(ESC) %If you have Matlab, you should rather prefer this plot
+my_bar3(ESC,0.9) %If you used Octave, use this function
 disp('Bye Cruel World!!!')
 
