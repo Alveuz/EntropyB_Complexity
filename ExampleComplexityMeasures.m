@@ -1,6 +1,6 @@
 clear;clc
 format long;
-path = 'C:\Users\Alveuz\Documents\GitHub\EntropyB_Complexity\';
+filePath = 'C:\Users\Alveuz\Documents\GitHub\EntropyB_Complexity\';
 
 SolarFlaresData         = 'SolarFlaresData.mat';
 BikeSharingData         = 'BikeSharingData.mat';
@@ -15,9 +15,9 @@ complexityType = 2; %Continuous complexity measures
 
 switch complexityType
     case 1
-        dataSet = 1; load([path SolarFlaresData]);%Flares, contains 
-        % dataSet = 2; load([path BikeSharingData]);%Bike Sharing
-        % dataSet = 3; load([path HouseElecCnsmptData]);%Household electric consumption
+        dataSet = 1; load([filePath SolarFlaresData]);%Flares, contains 
+        % dataSet = 2; load([filePath BikeSharingData]);%Bike Sharing
+        % dataSet = 3; load([filePath HouseElecCnsmptData]);%Household electric consumption
         noOfStates  = 10;%Number of states of the system
         switch dataSet
             case 1
