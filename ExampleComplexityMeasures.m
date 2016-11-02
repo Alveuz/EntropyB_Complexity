@@ -10,14 +10,14 @@ HouseElecCnsmptData     = 'HouseHoldElectricConsumption.mat';
 % matrix while Bike sharing data for hour and day are two separated vectors
 % for convinience.
 
-% complexityType = 1; %Discrete complexity measures
+%complexityType = 1; %Discrete complexity measures
 complexityType = 2; %Continuous complexity measures
 
 switch complexityType
     case 1
-        dataSet = 1; load([filePath SolarFlaresData]);%Flares, contains 
-        % dataSet = 2; load([filePath BikeSharingData]);%Bike Sharing
-        % dataSet = 3; load([filePath HouseElecCnsmptData]);%Household electric consumption
+%        dataSet = 1; load([filePath SolarFlaresData]);%Flares, contains 
+%        dataSet = 2; load([filePath BikeSharingData]);%Bike Sharing
+        dataSet = 3; load([filePath HouseElecCnsmptData]);%Household electric consumption
         noOfStates  = 10;%Number of states of the system
         switch dataSet
             case 1
@@ -72,8 +72,8 @@ switch complexityType
         % 2 = Power Law Distribution
         pdfType = 2;
         %Want to produce plots for distributions?
-%          plotPDFOn = 0;%Definetively NO
-       plotPDFOn = 1; %Yes, it would be amazing
+          plotPDFOn = 0;%Definetively NO
+%        plotPDFOn = 1; %Yes, it would be amazing
         noOfStates  = 50;
         %% Create Probability Distribution Parameter Sequence
         switch pdfType
@@ -142,7 +142,23 @@ switch complexityType
 end
 ESC = [Emrgnc, SlfRgnztn, Cmplxty];
 figure(3);
-%bar3(ESC) %If you have Matlab, you should rather prefer this plot
-my_bar3(ESC,0.9) %If you used Octave, use this function
+
+% Discrete examples labels
+%typeLabel=['C-Class';'M-Class';'X-Class']; %Flares
+%typeLabel=['Bikes p/H';'Bikes p/D']; %Bike Sharing
+%typeLabel=['Global KW/m';'Kitchen W/h']; %Household electric consumption
+
+%typeLabel=['1s';'2s';'3s';'4s';'5s';'6s';'7s';'8s';'9s';'10s']; %Gaussian Distribution
+typeLabel=['1';'2';'3';'4';'5';'6';'7';'8';'9';'10']; %Power Law Distribution
+
+h = bar3DPlot(ESC,0.7, typeLabel);
+
+%title("Solar Flares Data", "fontsize", 30);
+%title("Bike Sharing Data", "fontsize", 30);
+%title("Household Electric Consumption", "fontsize", 30);
+
+%title("Gaussian Distribution", "fontsize", 30);
+title("Power Law Distribution", "fontsize", 30);
+
 disp('Bye Cruel World!!!')
 
