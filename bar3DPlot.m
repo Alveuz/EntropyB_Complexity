@@ -11,16 +11,19 @@ function pp = bar3DPlot(M, width, param1Labels, varargin)
     %
     % See also: bar3, hist3
 
-    %% construct patch
+    %If width is not provided it is a default value
     if nargin < 2, width = 0.8; end
     assert(ismatrix(M), 'Matrix expected.')
     
+    %Or if the width is beyond the permitted value it is fixed within it.
     if(width <=0)
       width = 0.1;
     elseif(width >1)
       width = 1;      
     end
     
+    %If the parameters label vector is missing, we assumed that
+    %ESC results will be plotted.
     if (isempty(varargin))
       param2Labels=['Emergence';'Self-Organization';'Complexity'];
     else
@@ -83,8 +86,6 @@ function pp = bar3DPlot(M, width, param1Labels, varargin)
     set(gca,'xticklabel',param2Labels);  
     set(gca,'yticklabel',param1Labels);    
         
-    % return handle to patch object if requested
-    
     v = get(p, 'Vertices');
     fvcd = v(:,3);
     fvcd = fvcd * -1;

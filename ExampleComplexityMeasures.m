@@ -70,7 +70,7 @@ switch complexityType
         %Probability Function
         % 1 = Gaussian Distribution
         % 2 = Power Law Distribution
-        pdfType = 2;
+        pdfType = 1;
         %Want to produce plots for distributions?
           plotPDFOn = 0;%Definetively NO
 %        plotPDFOn = 1; %Yes, it would be amazing
@@ -148,8 +148,8 @@ figure(3);
 %typeLabel=['Bikes p/H';'Bikes p/D']; %Bike Sharing
 %typeLabel=['Global KW/m';'Kitchen W/h']; %Household electric consumption
 
-%typeLabel=['1s';'2s';'3s';'4s';'5s';'6s';'7s';'8s';'9s';'10s']; %Gaussian Distribution
-typeLabel=['1';'2';'3';'4';'5';'6';'7';'8';'9';'10']; %Power Law Distribution
+typeLabel=['1';'2';'3';'4';'5';'6';'7';'8';'9';'10']; %Gaussian Distribution
+%typeLabel=['1';'2';'3';'4';'5';'6';'7';'8';'9';'10']; %Power Law Distribution
 
 h = bar3DPlot(ESC,0.7, typeLabel);
 
@@ -157,8 +157,9 @@ h = bar3DPlot(ESC,0.7, typeLabel);
 %title("Bike Sharing Data", "fontsize", 30);
 %title("Household Electric Consumption", "fontsize", 30);
 
-%title("Gaussian Distribution", "fontsize", 30);
-title("Power Law Distribution", "fontsize", 30);
+title("Gaussian Distribution", "fontsize", 30);
+%title("Power Law Distribution", "fontsize", 30);
+ylabel("Std. Dev.", "fontsize", 12);
 
 disp('Bye Cruel World!!!')
 
