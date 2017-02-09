@@ -1,9 +1,9 @@
 clear;clc
 format long;
-path = 'C:\Users\Alveuz\Google Drive\Research And Development\UNAM PostDoc\Working Papers\ESC Matlab Functions for Frontiers\Data\Test RealWorld\Household Electric Consumption\DiffDataScales\';
+path = 'C:\Users\Alveuz\Documents\GitHub\EntropyB_Complexity\Data\';
 
 %Load active power data for the Household electric consumption dataset.
-activePowerPath     = 'activePowerData1.mat';
+activePowerPath     = 'activePowerData.mat';
 load([path activePowerPath]);
 
 %%Active power is analyzed for several time scales:minute, hour, day, 
@@ -70,9 +70,9 @@ end
 ESC = [Emrgnc(1:3,1), SlfRgnztn(1:3,1), Cmplxty(1:3,1)];
 
 figure(1)
-typeLabel=['Global KW/m';'Kitchen W/h';'Comfort W/h']; %Household electric consumption
+typeLabel=char('Global KW/m','Kitchen W/h','Comfort W/h'); %Household electric consumption
 h1 = bar3DPlot(ESC,1, typeLabel);
-title("Household energy consumption", "fontsize", 30);
+title('Household energy consumption', 'fontsize', 30);
 
 ESC_e = [Emrgnc(1:3,1), Emrgnc(1:3,2), Emrgnc(1:3,3), Emrgnc(1:3,4), ...
           Emrgnc(1:3,5)];
@@ -81,25 +81,25 @@ ESC_s = [SlfRgnztn(1:3,1), SlfRgnztn(1:3,2), SlfRgnztn(1:3,3), ...
 ESC_c = [Cmplxty(1:3,1), Cmplxty(1:3,2), Cmplxty(1:3,3), Cmplxty(1:3,4), ...
           Cmplxty(1:3,5)];
 
-xLabels=['Minute';'Hour';'Day';'Week';'Month']; %Household electric consumption
+xLabels=char('Minute','Hour','Day','Week','Month'); %Household electric consumption
 
 %figure(4);
 figure('Position',[200,200,1500,400]);
 subplot(1,3,1);
-typeLabel=['Global KW/m';'Kitchen W/h';'Comfort W/h']; %Household electric consumption
+typeLabel=char('Global KW/m','Kitchen W/h','Comfort W/h'); %Household electric consumption
 h2 = bar3DPlot(ESC_e,0.6, typeLabel, xLabels);
-title("Emergence", "fontsize", 30);
+title('Emergence', 'fontsize', 30);
 
 %figure(5);
 subplot(1,3,2);
-typeLabel=['Global KW/m';'Kitchen W/h';'Comfort W/h']; %Household electric consumption
+typeLabel=char('Global KW/m','Kitchen W/h','Comfort W/h'); %Household electric consumption
 h3 = bar3DPlot(ESC_s,0.6, typeLabel, xLabels);
-title("Self-organization", "fontsize", 30);
+title('Self-organization', 'fontsize', 30);
 
 %figure(6);
 subplot(1,3,3);
-typeLabel=['Global KW/m';'Kitchen W/h';'Comfort W/h']; %Household electric consumption
+typeLabel=char('Global KW/m','Kitchen W/h','Comfort W/h'); %Household electric consumption
 h4 = bar3DPlot(ESC_c,0.6, typeLabel, xLabels);
-title("Complexity", "fontsize", 30);
+title('Complexity', 'fontsize', 30);
 
 disp('Bye Cruel World!!!')

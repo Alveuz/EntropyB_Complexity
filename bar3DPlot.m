@@ -25,7 +25,7 @@ function pp = bar3DPlot(M, width, param1Labels, varargin)
     %If the parameters label vector is missing, we assumed that
     %ESC results will be plotted.
     if (isempty(varargin))
-      param2Labels=['Emergence';'Self-Organization';'Complexity'];
+      param2Labels = char('Emergence','Self-Organization','Complexity');
     else
       param2Labels=varargin{1};
     end
@@ -82,7 +82,7 @@ function pp = bar3DPlot(M, width, param1Labels, varargin)
              'Box','off', 'YDir','reverse', ...
         'PlotBoxAspectRatio',[1 1 (sqrt(5)-1)/2]) % 1/GR (GR: golden ratio)
 
-    set(gca, 'defaultaxesfontname', 'Arial') 
+    set(0, 'defaultaxesfontname', 'Arial') 
     set(gca,'xticklabel',param2Labels);  
     set(gca,'yticklabel',param1Labels);    
         

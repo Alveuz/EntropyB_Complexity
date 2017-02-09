@@ -1,6 +1,6 @@
 clear;clc
 format long;
-filePath = 'C:\Users\Alveuz\Documents\GitHub\EntropyB_Complexity\';
+filePath = 'C:\Users\Alveuz\Documents\GitHub\EntropyB_Complexity\Data\';
 
 SolarFlaresData         = 'SolarFlaresData.mat';
 BikeSharingData         = 'BikeSharingData.mat';
@@ -11,7 +11,7 @@ HouseElecCnsmptData     = 'HouseHoldElectricConsumption.mat';
 % for convinience.
 
 %complexityType = 1; %Discrete complexity measures
-complexityType = 2; %Continuous complexity measures
+ complexityType = 2; %Continuous complexity measures
 
 switch complexityType
     case 1
@@ -148,18 +148,18 @@ figure(3);
 %typeLabel=['Bikes p/H';'Bikes p/D']; %Bike Sharing
 %typeLabel=['Global KW/m';'Kitchen W/h']; %Household electric consumption
 
-typeLabel=['1';'2';'3';'4';'5';'6';'7';'8';'9';'10']; %Gaussian Distribution
-%typeLabel=['1';'2';'3';'4';'5';'6';'7';'8';'9';'10']; %Power Law Distribution
+typeLabel=char('1','2','3','4','5','6','7','8','9','10'); %Gaussian Distribution
+% typeLabel=char('1','2','3','4','5','6','7','8','9','10'); %Power Law Distribution
 
 h = bar3DPlot(ESC,0.7, typeLabel);
 
-%title("Solar Flares Data", "fontsize", 30);
-%title("Bike Sharing Data", "fontsize", 30);
-%title("Household Electric Consumption", "fontsize", 30);
+%title('Solar Flares Data', 'fontsize', 30);
+%title('Bike Sharing Data', 'fontsize', 30);
+%title('Household Electric Consumption', 'fontsize', 30);
 
-title("Gaussian Distribution", "fontsize", 30);
-%title("Power Law Distribution", "fontsize", 30);
-ylabel("Std. Dev.", "fontsize", 12);
+title('Gaussian Distribution', 'fontsize', 30);
+% title('Power Law Distribution', 'fontsize', 30);
+% ylabel('Std. Dev.', 'fontsize', 12);
 
 disp('Bye Cruel World!!!')
 
