@@ -10,8 +10,8 @@ HouseElecCnsmptData     = 'HouseHoldElectricConsumption.mat';
 % matrix while Bike sharing data for hour and day are two separated vectors
 % for convinience.
 
-%complexityType = 1; %Discrete complexity measures
- complexityType = 2; %Continuous complexity measures
+complexityType = 1; %Discrete complexity measures
+% complexityType = 2; %Continuous complexity measures
 
 switch complexityType
     case 1
@@ -70,10 +70,10 @@ switch complexityType
         %Probability Function
         % 1 = Gaussian Distribution
         % 2 = Power Law Distribution
-        pdfType = 1;
+        pdfType     = 2;
         %Want to produce plots for distributions?
-          plotPDFOn = 0;%Definetively NO
-%        plotPDFOn = 1; %Yes, it would be amazing
+%       plotPDFOn   = 0;%Definetively NO
+        plotPDFOn   = 1; %Yes, it would be amazing!
         noOfStates  = 50;
         %% Create Probability Distribution Parameter Sequence
         switch pdfType
@@ -90,7 +90,7 @@ switch complexityType
                 % Define Mean of the Normal Distribution(i.e. Mu=0)
                 mu      = (maxVal - minVal)/2;
                 %Delta increment for discrete Integration
-                Delta       = (maxVal-minVal)/(distSampleSize);
+                Delta   = (maxVal-minVal)/(distSampleSize);
                 for i=1:distParamNum
                     % Define Sigma of the Normal Distribution
                     sigma   = paramSeq(1,i);
@@ -115,19 +115,20 @@ switch complexityType
                 % Two Parameters, xmin and scale exponent (alpha)
                 % In this example, alpha is fixed, while x_min is tested.
                 alpha           = 5;
+%                xmin            = 3;
                 paramSeqXmin    = 1:distParamNum;
-                % paramSeqScale   = 1:distParamNum;
+%                paramSeqScale   = 2:distParamNum+1;
                 % Create discrete integration sequence
                 maxVal      = 100;
-                minVal      = 10;
                 for i=1:distParamNum
                     % Define the Power-Law Density Distribution Function
                     xmin        = paramSeqXmin(i);
+%                    alpha       = paramSeqScale(i);
                     dtSeq       = linspace (xmin, maxVal, distSampleSize);
                     % Create the Power-Law PDF
                     rightHand   = ((alpha-1)/xmin);
                     leftHand    = (dtSeq(:)./xmin).^(-1*alpha);
-                    pLawDist   = rightHand*leftHand;
+                    pLawDist    = rightHand*leftHand;
                     switch plotPDFOn
                         case 1
                             figure(2);
@@ -136,30 +137,35 @@ switch complexityType
                     end
                     [Emrgnc(i,1), SlfRgnztn(i,1), Cmplxty(i,1)] = ...
                         ContinuousComplexityMeasures(pLawDist,...
-                        minVal, maxVal, distSampleSize,noOfStates);
+                        xmin, maxVal, distSampleSize,noOfStates);
                 end
         end
 end
 ESC = [Emrgnc, SlfRgnztn, Cmplxty];
-figure(3);
+qq = figure(3);
 
 % Discrete examples labels
-%typeLabel=['C-Class';'M-Class';'X-Class']; %Flares
-%typeLabel=['Bikes p/H';'Bikes p/D']; %Bike Sharing
-%typeLabel=['Global KW/m';'Kitchen W/h']; %Household electric consumption
+% typeLabel=['C-Class';'M-Class';'X-Class']; %Flares
+% typeLabel=['Bikes p/H';'Bikes p/D']; %Bike Sharing
+typeLabel=['Global KW/m';'Kitchen W/h']; %Household electric consumption
 
-typeLabel=char('1','2','3','4','5','6','7','8','9','10'); %Gaussian Distribution
+% typeLabel=char('1','2','3','4','5','6','7','8','9','10'); %Gaussian Distribution
 % typeLabel=char('1','2','3','4','5','6','7','8','9','10'); %Power Law Distribution
+% typeLabel=char('2','3','4','5','6','7','8','9','10', '11'); %Power Law Distribution
 
 h = bar3DPlot(ESC,0.7, typeLabel);
 
 %title('Solar Flares Data', 'fontsize', 30);
 %title('Bike Sharing Data', 'fontsize', 30);
-%title('Household Electric Consumption', 'fontsize', 30);
+title('Household Electric Consumption', 'fontsize', 30);
 
-title('Gaussian Distribution', 'fontsize', 30);
+% title('Gaussian Distribution', 'fontsize', 30);
 % title('Power Law Distribution', 'fontsize', 30);
-% ylabel('Std. Dev.', 'fontsize', 12);
+% ylabel(sprintf('\\alpha \n (scale exponent)'), 'fontsize', 20);
+% ylabel(sprintf('x_{min}'), 'fontsize', 20);
+% ylabel(sprintf('\\sigma \n Std. Dev.'), 'fontsize', 20);
+
+
 
 disp('Bye Cruel World!!!')
 

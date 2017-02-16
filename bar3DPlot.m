@@ -83,8 +83,8 @@ function pp = bar3DPlot(M, width, param1Labels, varargin)
         'PlotBoxAspectRatio',[1 1 (sqrt(5)-1)/2]) % 1/GR (GR: golden ratio)
 
     set(0, 'defaultaxesfontname', 'Arial') 
-    set(gca,'xticklabel',param2Labels);  
-    set(gca,'yticklabel',param1Labels);    
+    set(gca,'xticklabel',param2Labels, 'fontsize', 20);  
+    set(gca,'yticklabel',param1Labels, 'fontsize', 20);    
         
     v = get(p, 'Vertices');
     fvcd = v(:,3);

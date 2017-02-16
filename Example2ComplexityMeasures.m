@@ -85,19 +85,19 @@ xLabels=char('Minute','Hour','Day','Week','Month'); %Household electric consumpt
 
 %figure(4);
 figure('Position',[200,200,1500,400]);
-subplot(1,3,1);
+subplot(2,4,1:2);
 typeLabel=char('Global KW/m','Kitchen W/h','Comfort W/h'); %Household electric consumption
 h2 = bar3DPlot(ESC_e,0.6, typeLabel, xLabels);
 title('Emergence', 'fontsize', 30);
 
 %figure(5);
-subplot(1,3,2);
+subplot(2,4,5:6);
 typeLabel=char('Global KW/m','Kitchen W/h','Comfort W/h'); %Household electric consumption
 h3 = bar3DPlot(ESC_s,0.6, typeLabel, xLabels);
 title('Self-organization', 'fontsize', 30);
 
 %figure(6);
-subplot(1,3,3);
+subplot(2,4,[3 4 7 8]);
 typeLabel=char('Global KW/m','Kitchen W/h','Comfort W/h'); %Household electric consumption
 h4 = bar3DPlot(ESC_c,0.6, typeLabel, xLabels);
 title('Complexity', 'fontsize', 30);
